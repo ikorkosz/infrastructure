@@ -15,3 +15,55 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+  jenkins:
+    build: jenkins_controller
+    container_name: artifactory
+    depends_on:
+      artifactory:
+        condition: service_healthy 
+    ports:
+      - "8880:8080"
+    volumes:
+      - ./jenkins_controller/casc.yaml:/usr/share/jenkins/ref/casc.yaml
+    restart: always
+  jenkins_agent:
+    build: jenkins_agent
+    depends_on:
+      jenkins:
+        condition: service_healthy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY-ssh-rsa public_key
+  sonarqube:
+    image: sonarqube:9.2.4-comunity 
+    container_name: sonarqube
+    ports: 
+      - "9000:9000"
+    depends_on:
+      jenkins:
+        condition: service_healthy 
+    restart: always
+  selenium/hub:
+    image: selenium/hub
+    container_name: selenium_hub
+    depends_on:
+      jenkins:
+        condition: service_healthy 
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+    restart: always
+  selenium_node:
+    image: selenium/node-firefox
+    container-name: firefox
+    depends_on:
+      selenium_hub:
+        condition: service_healthy
+    environment:
+      - SE_EVENT_BUS_HOST=selenium_hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    restart: always
