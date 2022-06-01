@@ -1,4 +1,4 @@
-pipelineJob(backend) {
+pipelineJob('backend') {
   definition {
     cpsScm {
       scm {

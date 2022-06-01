@@ -75,7 +75,7 @@ unclassified:
   sonarGlobalConfiguration:
     buildWrapperEnabled: false
     installations:
-    - name: "SonarCube"
+    - name: "SonarQube"
       serverUrl: "http://192.168.44.44:9000/"
       triggers:
         skipScmCause: false
@@ -103,6 +103,6 @@ tool:
               id: "1.2.1-linux-amd64"
 jobs:
   - file: /usr/share/jenkins/ref/jobs/backend.groovy
-  - file: /usr/share/jenkins/ref/jobs/frontend
-  - file: /usr/share/jenkins/ref/jobs/apps_of_apps.groovy
+  - file: /usr/share/jenkins/ref/jobs/frontend.groovy
+  - file: /usr/share/jenkins/ref/jobs/app_of_apps.groovy
   

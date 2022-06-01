@@ -1,4 +1,4 @@
-pipelineJob(app_of_apps) {
+pipelineJob('app_of_apps') {
   parameters {
     stringParam('backendDockerTag', '', 'Backend docker image tag')
     stringParam('frontendDockerTag', '', 'Frontend docker image tag')
