@@ -11,7 +11,7 @@ pipelineJob(app_of_apps) {
             credentials("")
             url("https://github.com/ikorkosz/App_of_apps.git")
           }
-          branches('master')
+          branches('main')
           scriptPath('Jenkinsfile')
         } 
       } 
